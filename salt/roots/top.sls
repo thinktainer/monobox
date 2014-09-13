@@ -2,4 +2,5 @@
 
 base:
   '*':
+    - foundation
     - mono

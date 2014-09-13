@@ -8,15 +8,17 @@ base:
       - pkg: mono-devel
 
 mono-devel:
-  pkg.installed
+  pkg.installed:
+  - require:
+    - pkg: mypkgs
 
 mypkgs:
   pkg.installed:
     - pkgs:
       - vim
-
-git:
-  pkg.installed
+      - autoconf
+      - git
+      - build-essential
 
 github.com:
   ssh_known_hosts:
@@ -24,9 +26,6 @@ github.com:
     - user: root
     - fingerprint: 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48
 
-
-build-essential:
-  pkg.installed
 
 /home/vagrant/build/fsharp:
   file.directory:
@@ -39,9 +38,25 @@ https://github.com/fsharp/fsharp.git:
   git.latest:
     - rev: fsharp_31
     - target: /home/vagrant/build/fsharp
+    - user: vagrant
     - require:
-      - pkg: git
+      - pkg: mypkgs
       - ssh_known_hosts: github.com
       - file: /home/vagrant/build/fsharp
 
-
+autogen-fsharp:
+  cmd.run:
+    - name: /home/vagrant/build/fsharp/autogen.sh --prefix=/usr
+    - cwd: /home/vagrant/build/fsharp
+    - user: vagrant
+    - watch:
+      - git: https://github.com/fsharp/fsharp.git
+      
+make-fsharp:
+  cmd.run:
+    - name: make
+    - cwd: /home/vagrant/build/fsharp
+    - user: vagrant
+    - require:
+      - cmd: autogen-fsharp
+        
