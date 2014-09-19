@@ -14,13 +14,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_x11 = true
 
   #hardware
-  config.vm.provider "vmware_fusion" do |v|
+  config.vm.provider "vmware_fusion" do |v, override|
     override.vm.box_download_checksum = "e31847031109f26733a5da0b9e40004a8768c5d14760c731ffad42d227558838"
     v.vmx["memsize"] = "2048"
     v.vmx["numvcpus"] = 2
   end
 
-  config.vm.provider "virtualbox" do |v|
+  config.vm.provider "virtualbox" do |v, override|
     override.vm.box_download_checksum = "b7831720bd1dc0776179e3125ae5e4034b5634c8a604bd069c471cbc70ba11c9"
     v.memory = 2048
     v.cpus = 2
