@@ -4,7 +4,7 @@ A [Vagrant](http://vagrantup.com) box for hacking
 
 In order to run this, you need to run from the top folder:
 
-  vagrant up --provider=[virtualbox|vmware_fusion|vmware_desktop]
+    vagrant up --provider=[virtualbox|vmware_fusion|vmware_desktop]
 
 Next you shell into the newly created environment with `vagrant ssh`.
 
